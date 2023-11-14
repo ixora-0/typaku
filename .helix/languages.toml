@@ -1,0 +1,64 @@
+# [[language]]
+# name = "html"
+# auto-format = true
+# [language.formatter]
+# command = 'pnpm'
+# args = ["exec", "prettier", "--config", ".prettierrc", "--parser", "html"]
+
+# [[language]]
+# name = "json"
+# auto-format = true
+# [language.formatter]
+# command = 'pnpm'
+# args = ["exec", "prettier", "--config", ".prettierrc", "--parser", "json"]
+
+# [[language]]
+# name = "css"
+# auto-format = true
+# [language.formatter]
+# command = 'pnpm'
+# args = ["exec", "prettier", "--config", ".prettierrc", "--parser", "css"]
+
+# [[language]]
+# name = "javascript"
+# auto-format = true
+# [language.formatter]
+# command = 'pnpm'
+# args = ["prettier", "--config", ".prettierrc"]
+
+[language-server.eslint]
+args = ["--stdio"]
+command = "vscode-eslint-language-server"
+
+[[language]]
+name = "typescript"
+auto-format = true
+formatter = { command = "npx", args = [
+  "prettier",
+  "--config",
+  ".prettierrc",
+  "--parser",
+  "typescript",
+] }
+roots = ["tailwind.config.ts", ".prettierrc.json"]
+language-servers = [
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+  "eslint",
+]
+file-types = ["ts"]
+
+[[language]]
+name = "svelte"
+auto-format = true
+formatter = { command = "npx", args = [
+  "prettier",
+  "--config",
+  ".prettierrc",
+  "--parser",
+  "svelte",
+] }
+language-servers = [{ name = "svelteserver", except-features = ["format"] }]
+roots = ["tailwind.config.ts", ".prettierrc.json"]
+file-types = ["svelte"]
