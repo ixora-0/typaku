@@ -40,7 +40,7 @@
   }
 </script>
 
-<div class="m-1 decoration-pink-500 {word_data.is_wrong ? 'underline' : ''}">
+<div class="m-1 decoration-error-500 {word_data.is_wrong ? 'underline' : ''}">
   {#each word_data.display as { char, status }, i}
     <span
       class={(function () {
@@ -50,9 +50,9 @@
           case CharStatus.Correct:
             return "text-success-500-400-token";
           case CharStatus.Incorrect:
-            return "text-error-900-50-token";
+            return "text-error-500-400-token";
           case CharStatus.Extra:
-            return "text-error-800-100-token";
+            return "text-error-400-500-token";
         }
       })() + " m-0"}
       bind:this={letter_elems[i]}>{char}</span
