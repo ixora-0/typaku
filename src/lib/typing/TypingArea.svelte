@@ -55,7 +55,7 @@
       return;
     }
     if (event.key.length === 1) {
-      in_progress.set(true);
+      in_progress.set(true); // there's still a word and we typed something
       typed_chars.update((n) => n + 1); // increment typed_char
 
       if (event.key === " ") {
@@ -74,6 +74,7 @@
           current_word_idx === init_words.length - 1 &&
           current_word.is_correctly_finished()
         ) {
+          // test is done
           typed_words = [...typed_words, current_word];
           current_word = undefined;
           current_word_idx++;
@@ -81,6 +82,7 @@
         }
       }
     } else if (event.key === "Backspace") {
+      // TODO: handle Ctrl+Backspace
       if (!current_word.backspace() && typed_words.length > 0) {
         // move back a word if can't backspace from current and there's a previous word
         remaining_words = [current_word, ...remaining_words];
