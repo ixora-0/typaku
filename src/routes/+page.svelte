@@ -24,7 +24,7 @@
 
   let typing_area_reset_key = {};
   let reset_button: HTMLElement;
-  function reset_typing_area() {
+  function on_reset() {
     typing_area_reset_key = {}; // every {} is unique, {} === {} evaluates to false
     reset_button.blur(); // unfocus on the button, allows for quick resetting
   }
@@ -65,11 +65,10 @@
   >
 </div>
 
-<div class="flex justify-center">
-  <LiveWpm />
-</div>
-
 {#key typing_area_reset_key}
+  <div class="flex justify-center">
+    <LiveWpm />
+  </div>
   {#await get_text()}
     <TypingAreaLoading />
   {:then text}
@@ -78,6 +77,6 @@
 {/key}
 <button
   class="variant-ghost-primary bg-primary-hover-token py-2 px-5 text-xl"
-  on:click={reset_typing_area}
+  on:click={on_reset}
   bind:this={reset_button}>Reset</button
 >
