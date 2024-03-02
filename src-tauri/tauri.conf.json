@@ -6,7 +6,7 @@
 		"distDir": "../build"
 	},
 	"package": {
-		"productName": "adversatype",
+		"productName": "typaku",
 		"version": "0.1.0"
 	},
 	"tauri": {

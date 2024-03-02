@@ -8,7 +8,7 @@ use log::{error, info, trace};
 
 use crate::data_structs::AppData;
 
-const APPDATA_FOLDER_NAME: &str = "AdversaType";
+const APPDATA_FOLDER_NAME: &str = "typaku";
 const DATA_FILE_PATH: &str = "data.toml"; // would be joined with user's data directory
 
 pub fn get_app_data_dir() -> Option<PathBuf> {
