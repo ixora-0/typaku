@@ -11,7 +11,7 @@ const ALPHABET: [char; ALPHABET_LEN] = [
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
     'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
 ];
-// no good way to conver [char] to [&'static str], mainly for de::Error::unknown_field
+// no good way to convert [char] to [&'static str], mainly for de::Error::unknown_field
 const ALPHABET_STR_SLICE: [&str; ALPHABET_LEN] = [
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
     "T", "U", "V", "W", "X", "Y", "Z",
@@ -20,7 +20,6 @@ const INIT_PERFORMANCE: f64 = 0.0;
 
 // using f64 to store performance score because toml::Value::Float uses f64
 #[derive(Debug)]
-
 pub struct LetterPerformance([f64; ALPHABET_LEN]);
 
 impl Default for LetterPerformance {
@@ -101,13 +100,6 @@ impl<'de> de::Visitor<'de> for LetterPerformanceVisitor {
     where
         Access: de::MapAccess<'de>,
     {
-        /// Turn a `String` into `&'static str`  
-        /// Looks bad but creating `de::Error` requires a ``&'static str`
-        /// for erroneous fields
-        fn get_static_slice(s: String) -> &'static str {
-            Box::leak(s.into_boxed_str())
-        }
-
         trace!("Running visit_map");
         let mut performance_data = LetterPerformance([INIT_PERFORMANCE; ALPHABET_LEN]);
         let mut seen_letter_flags = [false; ALPHABET_LEN];
@@ -126,31 +118,17 @@ impl<'de> de::Visitor<'de> for LetterPerformanceVisitor {
             };
 
             if seen_letter_flags[index] {
-                return Err(de::Error::duplicate_field(get_static_slice(key_string)));
+                return Err(de::Error::duplicate_field(ALPHABET_STR_SLICE[index]));
             }
 
             performance_data[index] = value;
             seen_letter_flags[index] = true;
         }
 
-        let missing_letters: Vec<_> = ALPHABET
-            .iter()
-            .enumerate()
-            .filter_map(|(i, &letter)| {
-                if !seen_letter_flags[i] {
-                    Some(letter.to_string())
-                } else {
-                    None
-                }
-            })
-            .collect();
-        let missing_letters = missing_letters.join(", ");
-
-        if !missing_letters.is_empty() {
-            return Err(de::Error::missing_field(get_static_slice(missing_letters)));
+        match seen_letter_flags.into_iter().position(|flag| !flag) {
+            Some(idx) => Err(de::Error::missing_field(ALPHABET_STR_SLICE[idx])),
+            None => Ok(performance_data),
         }
-
-        Ok(performance_data)
     }
 }
 
