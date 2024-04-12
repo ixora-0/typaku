@@ -30,30 +30,14 @@ impl Default for PerformanceWeight {
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Default)]
 pub struct AppConfig {
     theme_colors: ThemeColors,
     performance_weight: PerformanceWeight,
 }
-impl Default for AppConfig {
-    fn default() -> Self {
-        Self {
-            theme_colors: ThemeColors::default(),
-            performance_weight: PerformanceWeight::default(),
-        }
-    }
-}
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Default)]
 pub struct AppData {
     config: AppConfig,
     letter_performance: LetterPerformance,
-}
-impl Default for AppData {
-    fn default() -> Self {
-        Self {
-            config: AppConfig::default(),
-            letter_performance: LetterPerformance::default(),
-        }
-    }
 }
