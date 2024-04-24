@@ -15,21 +15,14 @@ You can also install [nix-direnv](https://github.com/nix-community/nix-direnv#in
 
 ### Without nix shell
 Follow the appropriate [prerequisites for tauri](https://tauri.app/v1/guides/getting-started/prerequisites).
-Instead of installing Node.js, you can also install [bun](https://bun.sh/) instead.
+Install [bun](https://bun.sh/) instead of [Node.js](https://nodejs.org/).
 
 ## Running
  - First run
 ```sh
 $ bun install
 ```
-if you are using bun (comes with the nix shell) or
-```sh
-$ npm install
-```
-if you are using Node.js.
-
  - Then run the following command to start a development build of the app:
 ```sh
 $ cargo tauri dev
 ```
-
